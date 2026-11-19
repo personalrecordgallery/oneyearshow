@@ -17,7 +17,7 @@
     .note { position: fixed; top: 25vh; right: 5vw; width: min(30vw, 360px); color: var(--ink); font-size: 18px; line-height: 1.35; }
     .note p { margin: 0 0 .35em; }
     a { color: var(--ink); }
-    a:visited { color: #551a8b; }
+    a:visited { color: var(--ink); }
     .lightbox { position: fixed; inset: 0; z-index: 5; display: none; align-items: center; justify-content: center; padding: 3vh 3vw; background: rgba(255,255,255,.96); cursor: zoom-out; }
     .lightbox[aria-hidden="false"] { display: flex; }
     .lightbox img { display: block; max-width: 94vw; max-height: 94vh; width: auto; height: auto; object-fit: contain; cursor: default; }
@@ -32,7 +32,8 @@
 <body>
   <main class="gallery" id="gallery" aria-label="Photo gallery">Loading photos…</main>
   <aside class="note" aria-label="About this gallery">
-    <p>A Personal Record Year <br> Group show, December 18 <br> at Personal Record Gallery</p>
+    <p>A Personal Record Year</p>
+    <p>Group show, December 18 <br> at Personal Record Gallery</p>
     <p>This is a photoblog with pictures uploaded by the artists participating in the group show.</p>
     <p><a href="mailto:personalrecordgallery@gmail.com">mail</a></p>
     <p><a href="https://www.instagram.com/personalrecord.gallery/" target="_blank" rel="noopener noreferrer">instagram</a></p>
