@@ -12,8 +12,10 @@
     html { background: var(--paper); }
     body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Times New Roman", Times, serif; }
     .gallery { width: 50vw; min-height: 100vh; padding: var(--gutter); }
-    .photo { display: block; width: 100%; margin: 0 0 var(--gutter); padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+    .post { margin: 0 0 var(--gutter); }
+    .photo { display: block; width: 100%; margin: 0; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
     .photo img { display: block; width: 100%; height: auto; }
+    .timestamp { margin: 5px 0 0; text-align: left; font-size: 13px; line-height: 1.2; }
     .note { position: fixed; top: 25vh; right: 5vw; width: min(30vw, 360px); color: var(--ink); font-size: 18px; line-height: 1.35; }
     .note p { margin: 0 0 .35em; }
     a { color: var(--ink); }
@@ -33,7 +35,7 @@
   <main class="gallery" id="gallery" aria-label="Photo gallery">Loading photos…</main>
   <aside class="note" aria-label="About this gallery">
     <p>A Personal Record Year</p>
-    <p>Group show, December 18 <br> at Personal Record Gallery</p>
+    <p>Group show, December 18 <br> at Personal Record Gallery.</p>
     <p><br></p>
     <p>This is a photoblog with pictures uploaded by the artists participating in the group show.</p>
     <p><br></p>
@@ -74,6 +76,8 @@
         const photos = await response.json();
         gallery.replaceChildren();
         photos.forEach((photo, index) => {
+          const post = document.createElement('article');
+          post.className = 'post';
           const button = document.createElement('button');
           button.className = 'photo';
           button.type = 'button';
@@ -84,7 +88,16 @@
           image.loading = index === 0 ? 'eager' : 'lazy';
           button.append(image);
           button.addEventListener('click', () => openPhoto(button));
-          gallery.append(button);
+          const timestamp = document.createElement('time');
+          timestamp.className = 'timestamp';
+          const uploadedAt = new Date(photo.uploaded);
+          timestamp.dateTime = uploadedAt.toISOString();
+          timestamp.textContent = uploadedAt.toLocaleString(undefined, {
+            year: 'numeric', month: 'short', day: 'numeric',
+            hour: 'numeric', minute: '2-digit'
+          });
+          post.append(button, timestamp);
+          gallery.append(post);
         });
         if (photos.length === 0) gallery.textContent = 'No photos yet.';
       } catch {
